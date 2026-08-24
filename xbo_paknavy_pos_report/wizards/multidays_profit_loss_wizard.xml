@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="multidays_profit_loss_wizard_form_view" model="ir.ui.view">
+            <field name="name">multidays.profit.loss.wizard.form</field>
+            <field name="model">multidays.profit.loss.wizard</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="pos_payment_method"/>
+                            </group>
+                            <group>
+                                <field name="date_to"/>
+                                <field name="pos_config_id"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                    <footer>
+                        <button string="Print" name="action_print" type="object" class="oe_highlight" data-hotkey="q"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel" data-hotkey="x"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="multidays_profit_loss_wizard_window_act" model="ir.actions.act_window">
+            <field name="name">Sale Analysis Report</field>
+            <field name="res_model">multidays.profit.loss.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="multidays_profit_loss_wizard_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+
+
+        <menuitem id="menu_multidays_profit_loss"
+              name="Sale Analysis Report"
+              action="multidays_profit_loss_wizard_window_act"
+              parent="point_of_sale.menu_point_of_sale"
+              sequence="2"/>
+
+
+
+    </data>
+
+</odoo>

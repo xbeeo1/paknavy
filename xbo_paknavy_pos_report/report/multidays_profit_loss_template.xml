@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="multidays_profit_loss_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <h2 colspan="6" style="text-align: center;">
+                    Sale Analysis Report
+                </h2>
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <h5>Date From:
+                            <t t-esc="from_date"/>
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>Payment Method:
+                            <t t-esc="pos_payment_method"/>
+                        </h5>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <h5>Date To:
+                            <t t-esc="to_date"/>
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>POS:
+                            <t t-esc="pos_config_name"/>
+                        </h5>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-12">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr class="text-center text-bold"
+                                    style="font-family:'Roboto',sans-serif;font-size:15px;font-weight: bold;">
+                                    <t t-foreach="code_names" t-as="code">
+                                        <th style="background:#a3c2c2;vertical-align:top;font-weight: bold;text-align:center;">
+                                            <span t-esc="code"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody style="font-family:'Roboto',sans-serif;font-size:13px;">
+                                <tr t-foreach="products" t-as="product">
+                                    <!-- Date header row -->
+                                    <t t-if="product.get('date_name', False)">
+                                        <td colspan="7" style="background:#a3c2c2;font-weight:bold;text-align:center;">
+                                            <span t-esc="product['date_name']"/>
+                                        </td>
+                                    </t>
+
+                                    <!-- Product row -->
+                                    <t t-if="product.get('Product_wise', False)">
+                                        <t t-foreach="code_names" t-as="code">
+                                            <td style="text-align:center;">
+                                                <span t-esc="product.get(code, '')"/>
+                                            </td>
+                                        </t>
+                                    </t>
+
+                                    <!-- Date subtotal row -->
+                                    <t t-if="product.get('datewise', False)">
+                                        <t t-foreach="code_names" t-as="code">
+                                            <td style="text-align:center;font-weight:bold;background:#e6f2f2;">
+                                                <span t-esc="product.get(code, '')"/>
+                                            </td>
+                                        </t>
+                                    </t>
+                                </tr>
+
+                                <!-- Grand Total -->
+                                <tr>
+                                    <t t-foreach="code_names" t-as="code">
+                                        <td style="text-align:center;font-weight:bold;background:#a3c2c2;">
+                                            <span t-esc="grand_total.get(code, '')"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+
+
+
+<!--                            <tbody style="font-family:'Roboto',sans-serif;font-size:13px;">-->
+<!--                                <tr t-foreach="payslips" t-as="slip">-->
+<!--                                    <t t-if="slip.get('dept_name',False)">-->
+<!--                                        <td-->
+<!--                                                style="color:black;font-weight: bold; font-size:15px; font-style:octarine;background:#a3c2c2;">-->
+<!--                                            <span t-esc="slip.get('dept_name')"/>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                    <t t-if="slip.get('Employee_wise',False)">-->
+<!--                                        <t t-foreach="code_names" t-as="code">-->
+<!--                                            <td style="font-size:15px; font-style:octarine; text-align:center;">-->
+<!--                                                <span t-esc="slip.get(code,False)"/>-->
+<!--                                            </td>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                    <t t-if="slip.get('departwise',False)">-->
+<!--                                        <t t-foreach="code_names" t-as="code">-->
+<!--                                            <td style="font-size:15px; font-style:octarine;font-weight: bold;text-align: center;">-->
+<!--                                                <span t-esc="slip.get(code, False)"/>-->
+<!--                                            </td>-->
+<!--                                        </t>-->
+<!--                                    </t>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <t t-foreach="code_names" t-as="code">-->
+<!--                                        <td style="font-size:15px; font-style:octarine;font-weight: bold;text-align: center;background:#a3c2c2;">-->
+<!--                                            <span t-esc="dept_grand_total.get(code, False)"/>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

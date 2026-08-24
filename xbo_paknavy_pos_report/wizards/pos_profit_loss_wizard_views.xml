@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+
+        <record id="pos_profit_loss_report_wizard_view" model="ir.ui.view">
+            <field name="name">pos.profit.loss.wizard</field>
+            <field name="model">pos.profit.loss.wizard</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group col="3">
+                            <group>
+                                <field name="date_from"/>
+                            </group>
+                            <group>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="pos_payment_method"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Print Report" name="print_pos_profit_loss_report" type="object"
+                                class="oe_highlight" data-hotkey="q"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel" data-hotkey="x"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_profit_loss_report_window_act" model="ir.actions.act_window">
+            <field name="name">POS Profit/Loss Wizard</field>
+            <field name="res_model">pos.profit.loss.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="pos_profit_loss_report_wizard_view"/>
+        </record>
+
+
+        <menuitem
+                id="menu_pos_profit_loss_report"
+                name="Daily Profit/Loss Report"
+                action="pos_profit_loss_report_window_act"
+                parent="point_of_sale.menu_point_rep"
+                sequence="0"/>
+    </data>
+</odoo>

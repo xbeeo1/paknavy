@@ -1,0 +1,115 @@
+<odoo>
+    <data>
+        <template id="report_pos_profit_loss">
+            <t t-call="web.external_layout">
+                <main>
+                    <div class="page">
+                        <h2 style="text-align: center;">POS Profit and Loss Report</h2>
+                        <div class="row mb-3">
+                            <div class="col-8">
+                                <h5>Date From:
+                                    <t t-esc="date_from"/>
+                                </h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Payment Method:
+                                    <t t-esc="pos_payment_method"/>
+                                </h5>
+                            </div>
+                        </div>
+                         <div class="row mb-3">
+                            <div class="col-8">
+                                <h5>Date To:
+                                    <t t-esc="date_to"/>
+                                </h5>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
+                        <table class="table table-sm table-bordered" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">Sr</th>
+                                    <th style="text-align: center;">Product</th>
+                                    <th style="text-align: center;">Quantity</th>
+                                    <th style="text-align: center;">Price</th>
+                                    <th style="text-align: center;">Discount</th>
+                                    <th style="text-align: center;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sr" t-value="1"/>
+                                <t t-set="total_qty" t-value="0"/>
+                                <t t-set="total_sale" t-value="0"/>
+                                <t t-set="total_discount" t-value="0"/>
+                                <t t-set="total_margin" t-value="0"/>
+
+                                <t t-foreach="docs.mapped('lines')" t-as="line">
+                                    <tr>
+                                        <td style="text-align: center;">
+                                            <t t-esc="sr"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.product_id.display_name"/>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <t t-esc="'%.2f' % line.qty"/>
+                                        </td>
+
+                                        <t t-set="sale_price" t-value="line.price_unit"/>
+                                        <td style="text-align: center;">
+                                            <t t-esc="'%.2f' % sale_price"/>
+                                        </td>
+
+<!--                                        <t t-set="cost_price" t-value="line.product_id.standard_price * line.qty"/>-->
+<!--                                        <td style="text-align: center;">-->
+<!--                                            <t t-esc="'%.2f' % cost_price"/>-->
+<!--                                        </td>-->
+
+                                        <t t-set="discount"
+                                           t-value="(line.price_unit * line.qty * line.discount) / 100"/>
+                                        <td style="text-align: center;">
+                                            <t t-esc="'%.2f' % discount"/>
+                                        </td>
+
+                                        <t t-set="margin" t-value="(line.price_unit * line.qty) - discount"/>
+                                        <td style="text-align: center;">
+                                            <t t-esc="'%.2f' % margin"/>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Totals -->
+                                    <t t-set="sr" t-value="sr + 1"/>
+                                    <t t-set="total_qty" t-value="total_qty + line.qty"/>
+                                    <t t-set="total_sale" t-value="total_sale + sale_price"/>
+                                    <t t-set="total_discount" t-value="total_discount + discount"/>
+                                    <t t-set="total_margin" t-value="total_margin + margin"/>
+                                </t>
+
+                                <!-- Total Row -->
+                                <tr style="font-weight: bold;">
+                                    <td colspan="2" style="text-align: center;">Total</td>
+                                    <td style="text-align: center;">
+                                        <t t-esc="'%.2f' % total_qty"/>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <t t-esc="'%.2f' % total_sale"/>
+                                    </td>
+<!--                                    <td style="text-align: center;">-->
+<!--                                        <t t-esc="'%.2f' % total_cost"/>-->
+<!--                                    </td>-->
+                                    <td style="text-align: center;">
+                                        <t t-esc="'%.2f' % total_discount"/>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <t t-esc="'%.2f' % total_margin"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+            </t>
+        </template>
+    </data>
+</odoo>
